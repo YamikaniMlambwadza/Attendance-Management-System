@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Platform } from 'react-native'
 import React, { useState } from 'react';
 //import axios from 'axios';

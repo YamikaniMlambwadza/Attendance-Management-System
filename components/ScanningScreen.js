@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
-import { Camera } from 'expo-camera';
+import { BarCodeScanner } from 'expo-barcode-scanner';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import ScanningResultScreen from './ScanningResultScreen';
@@ -21,7 +22,7 @@ const ScanningScreen = ({ onExit }) => {
   // Request camera permissions on mount
   useEffect(() => {
     (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
+      const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
     })();
   }, []);
@@ -36,8 +37,8 @@ const ScanningScreen = ({ onExit }) => {
     }
   };
 
-  // Placeholder function to handle QR code data
-  const handleBarCodeScanned = (data) => {
+  // Handle QR code scan result
+  const handleBarCodeScanned = ({ data }) => {
     console.log("Scanned QR Code Data:", data); // Log scanned data
     setScanning(false); // Close scanner after scan
     setStudentNumber(data); // Set scanned student number
@@ -70,8 +71,9 @@ const ScanningScreen = ({ onExit }) => {
   if (scanning) {
     return (
       <View className='flex-1 justify-center items-center'>
-        <Camera
-          onBarCodeScanned={({ data }) => handleBarCodeScanned(data)}
+        <BarCodeScanner
+          onBarCodeScanned={handleBarCodeScanned}
+          barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]} // Only look for QR codes
           style={{ width: '100%', height: '100%' }}
         />
         <TouchableOpacity
@@ -105,7 +107,7 @@ const ScanningScreen = ({ onExit }) => {
 
             <View className='mb-4 flex justify-center items-center'>
               <TouchableOpacity onPress={() => setScanning(true)}>
-                <MaterialCommunityIcons name="qrcode-scan" size={100} color="white" />
+              <MaterialCommunityIcons name="qrcode-scan" size={100} color="white" />             
               </TouchableOpacity>
             </View>
 
@@ -135,3 +137,4 @@ const ScanningScreen = ({ onExit }) => {
 };
 
 export default ScanningScreen;
+

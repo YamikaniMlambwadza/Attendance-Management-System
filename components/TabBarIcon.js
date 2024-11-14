@@ -1,3 +1,4 @@
+
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 export function TabBarIcon({ style, ...rest }) {

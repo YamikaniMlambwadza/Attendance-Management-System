@@ -27,7 +27,7 @@
     "tailwindcss": "^3.4.14",
     "expo-camera": "~15.0.16"
   },
-  "devDependencies": {
+  "devDependencies":  {
     "@babel/core": "^7.20.0"
   },
   "private": true
