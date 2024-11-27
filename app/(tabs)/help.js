@@ -1,4 +1,3 @@
-
 import { Text, View } from 'react-native';
 import React from 'react';
 
@@ -10,7 +9,20 @@ export default function Help() {
       </Text>
       <View className="px-6">
         <Text className="text-black text-base mb-4 text-left">
-          1. Register a student
+          1. Register  student
+        </Text>
+        
+        <Text className="text-black text-base mb-4 text-left ml-8">
+          1. Go to attendance marking
+        </Text>
+        <Text className="text-black text-base mb-4 text-left ml-8">
+          2. Press the pointing down button below the course name, and it gives two options:
+        </Text>
+        <Text className="text-black text-base mb-4 text-left ml-12">
+          a. Attended
+        </Text>
+        <Text className="text-black text-base mb-4 text-left ml-12">
+          b. Submitted
         </Text>
         <Text className="text-black text-base mb-4 text-left">
           2. Check records
