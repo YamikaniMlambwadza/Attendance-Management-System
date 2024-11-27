@@ -8,10 +8,12 @@ export default function Help() {
         help and support
       </Text>
       <View className="px-6">
+      
         <Text className="text-black text-base mb-4 text-left">
-          1. Register  student
+          1. Register student
         </Text>
-        
+
+      
         <Text className="text-black text-base mb-4 text-left ml-8">
           1. Go to attendance marking
         </Text>
@@ -24,6 +26,21 @@ export default function Help() {
         <Text className="text-black text-base mb-4 text-left ml-12">
           b. Submitted
         </Text>
+
+        {/* New section for "3. To mark attended" */}
+        <Text className="text-black text-base mb-4 text-left ml-8">
+          3. To mark attended
+        </Text>
+        <Text className="text-black text-base mb-4 text-left ml-12">
+          i. Press attended
+        </Text>
+        <Text className="text-black text-base mb-4 text-left ml-12">
+          ii. Scan student id
+        </Text>
+        <Text className="text-black text-base mb-4 text-left ml-12">
+          iii. Press ok to confirm
+        </Text>
+
         <Text className="text-black text-base mb-4 text-left">
           2. Check records
         </Text>
@@ -34,5 +51,6 @@ export default function Help() {
     </View>
   );
 }
+
 
 
