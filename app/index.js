@@ -11,7 +11,7 @@ export default Login = () => {
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
-    // check verification
+    
     if (!instructor_id.trim() || !password.trim()) {
       Toast.show({
         type: 'error' ,
