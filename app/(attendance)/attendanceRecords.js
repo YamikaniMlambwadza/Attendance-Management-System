@@ -1,64 +1,129 @@
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Button, FlatList, Alert } from 'react-native';
 
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity} from 'react-native'
-import React from 'react'
-import { Link } from 'expo-router'
-import TabLayout from '../(tabs)/_layout'
-import AttendanceCard from '../../components/AttendanceCard'
+function Attendance_summary({ route, navigation }) {
+  const [attendedData, setAttendedData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const fetchAttendedData = async () => {
+      try {
+        const response = await fetch('http://192.168.136.159:8000/attendance-summary/fetch-attendance-summary/');
+        
+        // Check if the response is OK (status 200)
+        if (!response.ok) {
+          throw new Error(`HTTP Error: ${response.status}`);
+        }
 
-const AttendanceRecords = () => {
-  const attendanceData = {
-    courseCode: 'COM312',
-    studentsEnrolled: 35,
-    studentsAttended: 30,
-    studentsSubmitted: 29,
-    examDate: '25 JUNE 2030',
-    examRoom: 'Mwamba 1 Lecture Theatre',
-    invigilator: 'Mr. Kenneth Kazembe',
-  };
-  return (
-    <>
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Attendance Summary</Text>
+        const result = await response.json();
+
+        if (result.attendance_summary) {
+          setAttendedData(result.attendance_summary || []);
+        } else {
+          Alert.alert('Error', result.error || 'Failed to fetch attendance data.');
+        }
+      } catch (error) {
+        console.error('Fetch error:', error);
+        Alert.alert('Error', 'Failed to connect to the backend or invalid response.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAttendedData();
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>Attendance Summary</Text>
+        <Text>Loading...</Text>
       </View>
-      <AttendanceCard attendance={attendanceData} />
-      <TouchableOpacity style={styles.button} className=''>
-      <Link href='/sheet' style={styles.buttonText} className='w-full text-center' >View Details</Link>
-      </TouchableOpacity>
-    </SafeAreaView>
+    );
+  }
 
-   
-   
-    </>
-  )
+  if (!attendedData || attendedData.length === 0) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>Attendance Summary</Text>
+        <Text style={styles.noDataText}>No attendance data available.</Text>
+        <Button title="Go Back" onPress={() => navigation.goBack()} />
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Attendance Summary</Text>
+
+      <FlatList
+        data={attendedData}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.studentInfo}>
+            <Text style={styles.info}>
+              {item.name} : {item.registration_number}
+            </Text>
+            {item.registration_number ? (
+              <Text style={styles.attendedText}>Attended ✔️</Text>
+            ) : (
+              <Text style={styles.attendedText}>Not Attended ❌</Text>
+            )}
+          </View>
+        )}
+      />
+
+      <Button
+        title="Go Back"
+        onPress={() => navigation.goBack()}
+        style={styles.button}
+      />
+    </View>
+  );
 }
+
+export default Attendance_summary;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 20,
+    padding: 20,
+    backgroundColor: '#f5f5f5',
   },
-  header: {
-    marginBottom: 20,
-  },
-  headerText: {
+  title: {
     fontSize: 24,
     fontWeight: 'bold',
+    marginBottom: 20,
+    color: '#4CAF50',
+  },
+  noDataText: {
+    fontSize: 16,
+    color: '#999',
+    marginBottom: 20,
+  },
+  studentInfo: {
+    marginBottom: 10,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 5,
+    backgroundColor: '#fff',
+    width: '100%',
+  },
+  info: {
+    fontSize: 16,
+    fontWeight: '500',
     color: '#333',
   },
-  button: {
-    backgroundColor: '#3b4fcc',
-    padding: 10,
-    borderRadius: 8,
-    width: '100%',
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: '#fff',
+  attendedText: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '400',
+    color: '#4CAF50',
+    marginTop: 5,
+  },
+  button: {
+    marginTop: 20,
   },
 });
-export default AttendanceRecords
