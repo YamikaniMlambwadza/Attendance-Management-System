@@ -100,6 +100,15 @@ export default function Help() {
         <Text classname="text-black text-base mb-4 text-left ml-12">
           ii. How do i confirm the total number of submission matches the attendance
         </Text>
+        <Text classname="text-black text-base mb-4 text-left ml-8">
+          Security and policies
+        </Text>
+        <Text classname="text-black text-base mb-4 text-left ml-12">
+          i. What if an unauthorised id is scanned? what can happen
+        </Text>
+        <Text classname="text-black text-base mb-4 text-left ml-12">
+          ii. can i track who scanned the student id if multiple invigilators are using the system 
+        </Text>
       </View>
     </View>
   );
