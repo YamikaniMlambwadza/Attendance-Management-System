@@ -11,7 +11,7 @@ export default Login = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async () => {
+  const handleLogin = async () => {  // handle login
     
     if (!instructor_id.trim() || !password.trim()) {
       Toast.show({
