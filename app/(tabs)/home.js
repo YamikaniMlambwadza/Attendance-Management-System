@@ -21,11 +21,11 @@ export default function AttendanceTracker() {
 
   return (
     <ScrollView className="flex-1 bg-gray-100 p-4 mt-10">
-      <Text className="text-3xl font-semibold text-gray-800 mb-4">Attendance Tracker</Text>
+      <Text className="text-3xl font-semibold text-gray-800 mb-4"> Attendance Tracker </Text>
       {courses.map((course) => (
         <View key={course.id} className="mb-14 bg-blue-500 rounded-2xl shadow-lg">
-          <View className="p-4">
-               <Link href='/attendanceRecords'>
+          <View className= "p-4">
+               <Link href= '/attendanceRecords'>
             <Text className="text-white text-lg font-bold">{course.code}:</Text>
              <Text className="text-white">{course.name}</Text>
                 </Link>
