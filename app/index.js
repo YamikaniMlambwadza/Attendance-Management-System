@@ -18,6 +18,7 @@ export default Login = () => {
         text1: 'Validation Error: Both fields are required',
       });
 
+      // compare 
       if (Platform.OS === 'web') {
         alert("Please fill in both fields");
       } else {
