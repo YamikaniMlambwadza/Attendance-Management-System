@@ -15,13 +15,10 @@ const ScanningResultScreen = ({ student, onRegisterAnother, onConfirm }) => {
             <Text className='font-semibold'>Name:</Text> {student.name}
           </Text>
           <Text className='text-lg text-gray-800'>
-            <Text className='font-semibold'>Reg No:</Text> {student.regNo}
+            <Text className='font-semibold'>Reg No:</Text> {student.registrationNumber}
           </Text>
           <Text className='text-lg text-gray-800'>
-            <Text className='font-semibold'>Course:</Text> {student.course}
-          </Text>
-          <Text className='text-lg text-gray-800'>
-            <Text className='font-semibold'>Status:</Text> {student.status}
+            <Text className='font-semibold'>Status:</Text> {student.attended}
           </Text>
         </View>
 
