@@ -61,16 +61,16 @@ export default function Help() {
         <Text classname="text-black text-base mb-4 text-left ml-12">
           1. Go to records
         </Text>
-        <text classname="text-black text-base mb-4 text-left ml-12">
+        <Text classname="text-black text-base mb-4 text-left ml-12">
           2. press attended, it will show the records of students who attended
-        </text>
+        </Text>
         <Text classname="text-black text-base mb-4 text-left ml-12">
           3. press submitted, it will show the records of student who submitted
         </Text>
         <Text classNme="text-black text-base mb-4 text-left">
           3. Frequently Asked Questions (FAQs)
         </Text>
-        <text classnam="text-black text-base mb-4 text-left ml-8">
+        <Text classnam="text-black text-base mb-4 text-left ml-8">
           General Usage
         </text>
         <Text classname="text-black text-base mb-4 text-left ml-12">
@@ -81,6 +81,33 @@ export default function Help() {
         </Text>
         <Text classname="text-black text-base mb-4 text-left ml-12">
           iii. can i scan multiple student id silmutaneously or does it need to be one at a time
+        </Text>
+        <Text classname="text-black text-base mb-4 text-left ml-8">
+          Technical issues
+        </Text>
+        <Text classsname="text-black text-base mb-4 text-left ml-12"> 
+         i. What happen if accidentally scan the student id twice
+        </Text>
+        <Text classname="text-black text-base mb-4 text-left ml-12">
+          ii.What should be done if the student id cannot be scanned
+        </Text>
+        <Text classname="text-black text-base mb-4 text-left ml-8">
+          Report and verification
+        </Text>
+        <Text classname="text-black text-base mb-4 text-left ml-12">
+          i.How can i generate a report of student who attended or submitted the exam paper
+        </Text>
+        <Text classname="text-black text-base mb-4 text-left ml-12">
+          ii. How do i confirm the total number of submission matches the attendance
+        </Text>
+        <Text classname="text-black text-base mb-4 text-left ml-8">
+          Security and policies
+        </Text>
+        <Text classname="text-black text-base mb-4 text-left ml-12">
+          i. What if an unauthorised id is scanned? what can happen
+        </Text>
+        <Text classname="text-black text-base mb-4 text-left ml-12">
+          ii. can i track who scanned the student id if multiple invigilators are using the system 
         </Text>
       </View>
     </View>
