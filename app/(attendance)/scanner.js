@@ -6,15 +6,7 @@ import ScanningResultScreen from '../../components/ScanningResultScreen';
 
 export default scanner = () => {
   const [scanningComplete, setScanningComplete] = useState(false);
-
-  // Sample student data; you can update this with actual scan data
-  const [studentData, setStudentData] = useState({
-    name: "Andrew Banda",
-    regNo: "BSC/14/22",
-    course: "COM314",
-    status: "Attended"
-  });
-
+  
   // Function to handle completing a scan and moving to the results screen
   const handleScanComplete = () => {
     setScanningComplete(true); // Set scanningComplete to true to show results screen
@@ -29,7 +21,7 @@ export default scanner = () => {
       {scanningComplete ? (
         // Display the ScanningResultScreen when scan is complete
         <ScanningResultScreen
-          student={studentData}
+          student={studentInfo}
           onRegisterAnother={handleRegisterAnother}
           onConfirm={() => console.log("Confirmed")}
         />
