@@ -6,18 +6,12 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import ScanningResultScreen from './ScanningResultScreen';
 
-const students = [
-  { name: "Andrew Banda", regNo: "BSC-14-22", course: "COM314", status: "Attended" },
-  { name: "Michael Enock", regNo: "BSC-15-22", course: "COM314", status: "Attended" },
-  { name: "Sarah Chanda", regNo: "BSC-16-22", course: "COM315", status: "Absent" },
-  // Add more students as needed
-];
-
 const ScanningScreen = ({ onExit }) => {
   const [studentNumber, setStudentNumber] = useState('');
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [hasPermission, setHasPermission] = useState(null);
   const [scanning, setScanning] = useState(false);
+  const [studentInfo, setStudentInfo] = useState(null);
 
   // Request camera permissions on mount
   useEffect(() => {
@@ -26,25 +20,47 @@ const ScanningScreen = ({ onExit }) => {
       setHasPermission(status === 'granted');
     })();
   }, []);
-
-  // Function to search for student by regNo
-  const handleSearchStudent = () => {
-    const student = students.find((s) => s.regNo.toUpperCase() === studentNumber.toUpperCase());
-    if (student) {
-      setSelectedStudent(student); // Set selected student to display their details
-    } else {
-      Alert.alert("Student not found");
+     
+  const handleBarCodeScanned = async ({ data }) => {
+    setScanned(true); // Disable further scanning temporarily
+    console.log(`Scanned Data: ${data}`);
+  
+    try {
+      // Send scanned data to the Django backend
+      const response = await fetch('http://192.168.136.159:8000/linkGoogle/fetch-google-sheet/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ registration_number: data }),
+      });
+  
+      const result = await response.json();
+  
+      if (response.ok) {
+        if (result.exists) {
+          // Display student info if registration exists
+          setStudentInfo({
+            name: result.name,
+            registrationNumber: data,
+            attended: true,
+          });
+  
+        } else {
+          Alert.alert('Not Found', 'Registration number does not exist.');
+        }
+      } else {
+        Alert.alert('Error', result.error || 'Something went wrong.');
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Error', 'Failed to connect to the backend.');
     }
+  
+    // Reset scanning after a delay
+    setTimeout(() => setScanned(false), 2000);
   };
-
-  // Handle QR code scan result
-  const handleBarCodeScanned = ({ data }) => {
-    console.log("Scanned QR Code Data:", data); // Log scanned data
-    setScanning(false); // Close scanner after scan
-    setStudentNumber(data); // Set scanned student number
-    handleSearchStudent(); // Search for student in array
-  };
-
+  
   // If camera permission is not granted
   if (hasPermission === null) {
     return <Text>Requesting for camera permission</Text>;
@@ -123,7 +139,7 @@ const ScanningScreen = ({ onExit }) => {
                 />
                 <TouchableOpacity
                   className='absolute top-2 right-2 bg-blue-700 p-2 rounded-lg'
-                  onPress={handleSearchStudent}
+                  onPress={ handleBarCodeScanned } 
                 >
                   <Text className='text-white text-lg font-semibold'>OK</Text>
                 </TouchableOpacity>
