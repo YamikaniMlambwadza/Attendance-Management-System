@@ -91,6 +91,15 @@ export default function Help() {
         <Text classname="text-black text-base mb-4 text-left ml-12">
           ii.What should be done if the student id cannot be scanned
         </Text>
+        <Text classname="text-black text-base mb-4 text-left ml-8">
+          Report and verification
+        </Text>
+        <Text classname="text-black text-base mb-4 text-left ml-12">
+          i.How can i generate a report of student who attended or submitted the exam paper
+        </Text>
+        <Text classname="text-black text-base mb-4 text-left ml-12">
+          ii. How do i confirm the total number of submission matches the attendance
+        </Text>
       </View>
     </View>
   );
