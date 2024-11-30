@@ -1,6 +1,6 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Platform, Alert } from 'react-native';
 import React, { useState } from 'react';
-import { Link, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import Toast from 'react-native-toast-message';
 
 export default Login = () => {
@@ -14,7 +14,7 @@ export default Login = () => {
     // Check if fields are empty
     if (!instructor_id.trim() || !password.trim()) {
       Toast.show({
-        type: 'error',
+        type: 'error' ,
         text1: 'Validation Error: Both fields are required',
       });
 
