@@ -5,8 +5,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 
 const courses = [
-  { id: '1', code: 'COM312', name: 'HCI' },
-  { id: '2', code: 'COM314', name: 'Algorithms & Data Structures' },
+  { id: '1', code: 'COM312', name: ' HCI ' },
+  { id: '2', code: 'COM314', name: ' Algorithms & Data Structures ' },
   { id: '3', code: 'COM313', name: 'Computer Security' },
   { id: '4', code: 'COM311', name: ' Software Engineering' }, 
   { id: '5', code: 'COM315', name: ' Linux Systems Administration' }
