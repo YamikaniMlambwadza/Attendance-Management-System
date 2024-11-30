@@ -1,59 +1,54 @@
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Platform } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Platform, Alert } from 'react-native';
 import React, { useState } from 'react';
-//import axios from 'axios';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
+import Toast from 'react-native-toast-message';
 
 export default Login = () => {
-  const [username, setUsername] = useState('');
+  const router = useRouter();
+
+  const [instructor_id, setInstructorId] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const backendUrl = 'http://localhost:3000/admin/signIn';
-
   const handleLogin = async () => {
-    console.log("Login button clicked");
-
     // Check if fields are empty
-    if (!username.trim() || !password.trim()) {
-      console.log("Validation Error: Both fields are required");
-      
+    if (!instructor_id.trim() || !password.trim()) {
+      Toast.show({
+        type: 'error',
+        text1: 'Validation Error: Both fields are required',
+      });
+
       if (Platform.OS === 'web') {
-        alert("Please fill in both fields"); // `alert` for web
+        alert("Please fill in both fields");
       } else {
-        Alert.alert('Validation Error', 'Please fill in both fields'); // `Alert` for mobile
+        Alert.alert('Validation Error', 'Please fill in both fields');
       }
       return;
     }
 
-    console.log("Attempting to login with", username, password);
-
     try {
       setLoading(true);
-      
-      const response = await axios.post(backendUrl, { username, password });
-      
-      if (response.status === 201) { 
-        const { accessToken } = response.data;
-        console.log("Login Successful:", accessToken);
 
-        if (Platform.OS === 'web') {
-          alert("Login Successful");
-        } else {
-          Alert.alert('Login Successful', `Token: ${accessToken}`);
-        }
-        
+      // Make the fetch POST request
+      const response = await fetch('http://192.168.234.159:8000/auth/login/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ instructor_id, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json(); // Parse the JSON response
+        console.log('Response:', data);
+        router.push('/home');
       } else {
-        console.log("Login Failed: Invalid credentials");
-
-        if (Platform.OS === 'web') {
-          alert("Invalid username or password");
-        } else {
-          Alert.alert('Login Failed', 'Invalid username or password');
-        }
+        const errorData = await response.json();
+        console.error('Error response:', errorData);
+        Alert.alert('Login Failed', 'Invalid username or password');
       }
     } catch (error) {
-      console.error("Error during login:", error);
-      
+      console.error("Error during login:", error.message);
       if (Platform.OS === 'web') {
         alert("Network or Server Error");
       } else {
@@ -63,43 +58,34 @@ export default Login = () => {
       setLoading(false);
     }
   };
+
   return (
     <View style={styles.container}>
-    <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>Login</Text>
 
-    <TextInput
-      style={styles.input}
-      placeholder="Username"
-      value={username}
-      onChangeText={setUsername}
-      autoCapitalize="none"
-    />
+      <TextInput
+        style={styles.input}
+        placeholder="instructorId"
+        value={instructor_id}
+        onChangeText={setInstructorId}
+        autoCapitalize="none"
+      />
 
-    <TextInput
-      style={styles.input}
-      placeholder="Password"
-      value={password}
-      onChangeText={setPassword}
-      secureTextEntry
-    />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+      />
 
-    <TouchableOpacity style={styles.button} onPress={handleLogin} disabled={loading}>
-      <Text style={styles.buttonText}>{loading ? 'Logging in...' : 'Login'}</Text>
-    </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={handleLogin} disabled={loading}>
+        <Text style={styles.buttonText}>{loading ? 'Logging in...' : 'Login'}</Text>
+      </TouchableOpacity>
 
-    <TouchableOpacity className='p-2'>
-    <Link href="/home">Go Home </Link>
-    </TouchableOpacity>
-
-    <TouchableOpacity className='p-2'>
-    <Link href="/signUser">Forget Password</Link>
-    </TouchableOpacity>   
-    
-  </View> 
-   
-  )
-}
-
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -136,44 +122,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
