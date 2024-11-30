@@ -8,7 +8,7 @@ const AttendLayout = () => {
     <Stack>
     <Stack.Screen name="scanner" options={  {headerShown: false, title:'scanner' }} />    
     <Stack.Screen name="attendanceRecords" options={ {headerShown: false }} />
-    <Stack.Screen name="sheet" options={ {headerShown: false }} />
+   
  </Stack>
 
   )
